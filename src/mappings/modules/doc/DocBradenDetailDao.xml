@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.digihealth.anesthesia.doc.dao.DocBradenDetailDao" >
+  <resultMap id="BaseResultMap" type="com.digihealth.anesthesia.doc.po.DocBradenDetail" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="evaluateId" property="evaluateId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="ageSco" property="ageSco" jdbcType="INTEGER" />
+    <result column="bmiSco" property="bmiSco" jdbcType="INTEGER" />
+    <result column="skinSco" property="skinSco" jdbcType="INTEGER" />
+    <result column="optBodySco" property="optBodySco" jdbcType="INTEGER" />
+    <result column="exforceSco" property="exforceSco" jdbcType="INTEGER" />
+    <result column="operTimeSco" property="operTimeSco" jdbcType="INTEGER" />
+    <result column="operFactorSco" property="operFactorSco" jdbcType="INTEGER" />
+    <result column="totalSco" property="totalSco" jdbcType="INTEGER" />
+    <result column="dangerLevel" property="dangerLevel" jdbcType="VARCHAR" />
+    <result column="evaluator" property="evaluator" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, evaluateId, type, ageSco, bmiSco, skinSco, optBodySco, exforceSco, operTimeSco, 
+    operFactorSco, totalSco, dangerLevel, evaluator
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_braden_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from doc_braden_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.digihealth.anesthesia.doc.po.DocBradenDetail" >
+    insert into doc_braden_detail (id, evaluateId, type, 
+      ageSco, bmiSco, skinSco, 
+      optBodySco, exforceSco, operTimeSco, 
+      operFactorSco, totalSco, dangerLevel, 
+      evaluator)
+    values (#{id,jdbcType=VARCHAR}, #{evaluateId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{ageSco,jdbcType=INTEGER}, #{bmiSco,jdbcType=INTEGER}, #{skinSco,jdbcType=INTEGER}, 
+      #{optBodySco,jdbcType=INTEGER}, #{exforceSco,jdbcType=INTEGER}, #{operTimeSco,jdbcType=INTEGER}, 
+      #{operFactorSco,jdbcType=INTEGER}, #{totalSco,jdbcType=INTEGER}, #{dangerLevel,jdbcType=VARCHAR}, 
+      #{evaluator,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.digihealth.anesthesia.doc.po.DocBradenDetail" >
+    insert into doc_braden_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="evaluateId != null" >
+        evaluateId,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="ageSco != null" >
+        ageSco,
+      </if>
+      <if test="bmiSco != null" >
+        bmiSco,
+      </if>
+      <if test="skinSco != null" >
+        skinSco,
+      </if>
+      <if test="optBodySco != null" >
+        optBodySco,
+      </if>
+      <if test="exforceSco != null" >
+        exforceSco,
+      </if>
+      <if test="operTimeSco != null" >
+        operTimeSco,
+      </if>
+      <if test="operFactorSco != null" >
+        operFactorSco,
+      </if>
+      <if test="totalSco != null" >
+        totalSco,
+      </if>
+      <if test="dangerLevel != null" >
+        dangerLevel,
+      </if>
+      <if test="evaluator != null" >
+        evaluator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluateId != null" >
+        #{evaluateId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ageSco != null" >
+        #{ageSco,jdbcType=INTEGER},
+      </if>
+      <if test="bmiSco != null" >
+        #{bmiSco,jdbcType=INTEGER},
+      </if>
+      <if test="skinSco != null" >
+        #{skinSco,jdbcType=INTEGER},
+      </if>
+      <if test="optBodySco != null" >
+        #{optBodySco,jdbcType=INTEGER},
+      </if>
+      <if test="exforceSco != null" >
+        #{exforceSco,jdbcType=INTEGER},
+      </if>
+      <if test="operTimeSco != null" >
+        #{operTimeSco,jdbcType=INTEGER},
+      </if>
+      <if test="operFactorSco != null" >
+        #{operFactorSco,jdbcType=INTEGER},
+      </if>
+      <if test="totalSco != null" >
+        #{totalSco,jdbcType=INTEGER},
+      </if>
+      <if test="dangerLevel != null" >
+        #{dangerLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluator != null" >
+        #{evaluator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.digihealth.anesthesia.doc.po.DocBradenDetail" >
+    update doc_braden_detail
+    <set >
+      <if test="evaluateId != null" >
+        evaluateId = #{evaluateId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ageSco != null" >
+        ageSco = #{ageSco,jdbcType=INTEGER},
+      </if>
+      <if test="bmiSco != null" >
+        bmiSco = #{bmiSco,jdbcType=INTEGER},
+      </if>
+      <if test="skinSco != null" >
+        skinSco = #{skinSco,jdbcType=INTEGER},
+      </if>
+      <if test="optBodySco != null" >
+        optBodySco = #{optBodySco,jdbcType=INTEGER},
+      </if>
+      <if test="exforceSco != null" >
+        exforceSco = #{exforceSco,jdbcType=INTEGER},
+      </if>
+      <if test="operTimeSco != null" >
+        operTimeSco = #{operTimeSco,jdbcType=INTEGER},
+      </if>
+      <if test="operFactorSco != null" >
+        operFactorSco = #{operFactorSco,jdbcType=INTEGER},
+      </if>
+      <if test="totalSco != null" >
+        totalSco = #{totalSco,jdbcType=INTEGER},
+      </if>
+      <if test="dangerLevel != null" >
+        dangerLevel = #{dangerLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluator != null" >
+        evaluator = #{evaluator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.digihealth.anesthesia.doc.po.DocBradenDetail" >
+    update doc_braden_detail
+    set evaluateId = #{evaluateId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      ageSco = #{ageSco,jdbcType=INTEGER},
+      bmiSco = #{bmiSco,jdbcType=INTEGER},
+      skinSco = #{skinSco,jdbcType=INTEGER},
+      optBodySco = #{optBodySco,jdbcType=INTEGER},
+      exforceSco = #{exforceSco,jdbcType=INTEGER},
+      operTimeSco = #{operTimeSco,jdbcType=INTEGER},
+      operFactorSco = #{operFactorSco,jdbcType=INTEGER},
+      totalSco = #{totalSco,jdbcType=INTEGER},
+      dangerLevel = #{dangerLevel,jdbcType=VARCHAR},
+      evaluator = #{evaluator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByEvaluateId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_braden_detail
+    where evaluateId = #{evaluateId,jdbcType=VARCHAR}
+  </select>
+</mapper>

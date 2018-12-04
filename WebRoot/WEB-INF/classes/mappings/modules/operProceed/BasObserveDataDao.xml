@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.digihealth.anesthesia.operProceed.dao.BasObserveDataDao" >
+  <resultMap id="BaseResultMap" type="com.digihealth.anesthesia.operProceed.po.BasObserveData" >
+    <id column="id" property="keyid" jdbcType="VARCHAR" />
+    <id column="timesend" property="time" jdbcType="TIMESTAMP" />
+    <result column="patientId" property="regOptId" jdbcType="VARCHAR" />
+    <result column="observeId" property="observeId" jdbcType="VARCHAR" />
+    <result column="observevalue" property="value" jdbcType="REAL" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="observeName" property="observeName" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="freq" property="freq" jdbcType="INTEGER" />
+    <result column="position" property="position" jdbcType="INTEGER" />
+    <result column="intervalTime" property="intervalTime" jdbcType="INTEGER" />
+    <result column="deviceId" property="deviceId" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    keyid as id, timesend as time, patientId as regOptId,observeId, observevalue as value, state, observeName, icon, color, freq, position, 
+    intervalTime, deviceId,source
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" /><!-- , patientId as regOptId,a.timesend time,a.observevalue value,a.keyid id -->
+    from bas_observe_data
+    where id = #{id,jdbcType=VARCHAR}
+      and time = #{time,jdbcType=TIMESTAMP}
+  </select>
+  
+  <select id="searchObsListByRegOptId" resultType="com.digihealth.anesthesia.operProceed.po.BasObserveData">
+  	select keyid as id from bas_observe_data where patientId in  <foreach collection="regOptIds" item ="item" index="index" open="(" separator="," close=")" >#{item}</foreach> limit 1000
+  </select>
+
+	
+	<select id="searchObserveTimeById" resultType="com.digihealth.anesthesia.operProceed.po.BasObserveData">
+		SELECT 
+			DISTINCT(a.timesend) time
+		FROM bas_observe_data a 
+		WHERE
+		a.patientId = #{regOptId}
+		order by a.timesend asc
+	</select>
+	
+	<select id="searchObserveIdById" resultType="com.digihealth.anesthesia.operProceed.po.BasObserveData">
+		SELECT 
+			DISTINCT(a.observeId)
+		FROM bas_observe_data a 
+		WHERE
+		a.patientId = #{regOptId}
+		and a.position='0'
+	</select>
+	
+  <!-- 解决limit 1 的效率问题，order by time desc 不走索引 -->
+    <select id="searchObserveDataByPosition" resultType="com.digihealth.anesthesia.operProceed.formbean.RealTimeDataFormBean">
+		SELECT a.observeId,a.observeName ,a.observevalue as value,a.state,a.timesend time FROM bas_observe_data a 
+		WHERE a.patientId = #{baseQuery.regOptId} 
+		AND a.timesend = (SELECT MAX(timesend) FROM bas_observe_data a WHERE a.patientId = #{baseQuery.regOptId} ) 
+		ORDER BY a.observeId 
+	</select>
+   
+   <select id="findObserveDataListByTime" resultType="com.digihealth.anesthesia.operProceed.po.BasObserveData">
+		SELECT <include refid="Base_Column_List" />
+		<!-- a.*,a.patientId as regOptId,a.timesend time,a.observevalue value,a.keyid id --> FROM bas_observe_data a
+		where a.patientId = #{regOptId} 
+		and a.timesend = (select max(timesend) from bas_observe_data where patientId = #{regOptId})
+		<if test="observeIds != null and observeIds != '' and observeIds.size>0 ">
+		AND a.observeId IN
+			<foreach collection="observeIds" item="observeId" open="("  separator="," close=")">
+				 #{observeId}
+			</foreach>
+		</if>
+		<if test="docType != null">
+		AND	a.docType = #{docType}
+		</if>
+		order by a.timesend ,a.observeId 
+   </select>
+   
+   
+   <select  id="searchObserveListByBedId" resultType="com.digihealth.anesthesia.operProceed.po.Observe">
+	SELECT a.eventId AS observeId ,a.paraId ,a.paraName ,a.deviceId 
+         FROM  (select * From bas_device_monitor_config where beid=#{bedId} ) a , (select * From bas_device_config where beid=#{bedId} ) b
+	     WHERE a.deviceId = b.deviceId
+	</select>
+	
+	<select id="searchMonitorDisplayByTime" resultType="java.lang.Integer">
+    	select 
+	  	count(1)
+	  	from bas_observe_data
+	  	where patientId = #{regOptId,jdbcType=VARCHAR} 
+	  	and timesend = #{timesend}
+	  	order by timesend desc
+    </select>
+
+  <delete id="deleteObsByIds" >
+    delete FROM bas_observe_data WHERE keyid in <foreach collection="observeIds" item ="item" index="index" open="(" separator="," close=")" >#{item}</foreach>
+  </delete>
+
+  <select id="searchObserveWaveList" resultType="com.digihealth.anesthesia.operProceed.po.BasMonitorDisplay">
+		SELECT t.keyid AS id, t.patientId AS regOptId, t.timesend AS `time`, t.observeId, t.observevalue AS `value`,
+		t.state, t.observeName, t.icon, t.color, t.freq, t.position, t.intervalTime,
+		t.deviceId FROM `bas_observe_wave` t WHERE 1=1 AND t.patientId = #{regOptId}
+		<if test="observeIds.size>0 and observeIds != ''">
+			AND t.observeId IN
+			<foreach collection="observeIds" item="observeId" open="("  separator="," close=")">
+				 #{observeId}
+			</foreach>
+		</if>
+		AND t.`timesend` = (SELECT DATE_ADD(NOW(),  INTERVAL -1 SECOND));
+  </select>
+  
+  <select id="searchObserveSecondsList" resultType="com.digihealth.anesthesia.operProceed.po.BasMonitorDisplay">
+		SELECT t.keyid AS id, t.patientId AS regOptId, t.timesend AS `time`, t.observeId, t.observevalue AS `value`,
+		t.state, t.observeName, t.icon, t.color, t.freq, t.position, t.intervalTime,
+		t.deviceId FROM `bas_observe_data` t WHERE 1=1
+		AND t.patientId = #{regOptId} 
+		<if test="observeNames.size>0 and observeNames != ''">
+			AND t.observeName IN
+			<foreach collection="observeNames" item="observeName" open="("  separator="," close=")">
+				#{observeName}
+			</foreach>
+		</if> AND t.`timesend` = (SELECT DATE_ADD(NOW(),  INTERVAL -1 SECOND));
+  </select>
+  
+  <delete id="deleteObsWave">
+  		delete FROM bas_observe_wave WHERE timesend &lt;= (SELECT DATE_ADD(NOW(),  INTERVAL -4 SECOND))
+  </delete>
+</mapper>

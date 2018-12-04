@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.digihealth.anesthesia.doc.dao.DocBradenEvaluateDao" >
+  <resultMap id="BaseResultMap" type="com.digihealth.anesthesia.doc.po.DocBradenEvaluate" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="regOptId" property="regOptId" jdbcType="VARCHAR" />
+    <result column="processState" property="processState" jdbcType="VARCHAR" />
+    <result column="optBody" property="optBody" jdbcType="VARCHAR" />
+    <result column="optBodyOther" property="optBodyOther" jdbcType="VARCHAR" />
+    <result column="pressurePart" property="pressurePart" jdbcType="VARCHAR" />
+    <result column="pressurePartOther" property="pressurePartOther" jdbcType="VARCHAR" />
+    <result column="prePrecaution" property="prePrecaution" jdbcType="VARCHAR" />
+    <result column="skinIntegrity" property="skinIntegrity" jdbcType="VARCHAR" />
+    <result column="gelAppliance" property="gelAppliance" jdbcType="VARCHAR" />
+    <result column="midPrecaution" property="midPrecaution" jdbcType="VARCHAR" />
+    <result column="ChgLocalPress" property="chgLocalPress" jdbcType="VARCHAR" />
+    <result column="midPrecautionOther" property="midPrecautionOther" jdbcType="VARCHAR" />
+    <result column="specialCase" property="specialCase" jdbcType="VARCHAR" />
+    <result column="specialCaseOther" property="specialCaseOther" jdbcType="VARCHAR" />
+    <result column="postSkinCase" property="postSkinCase" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, regOptId, processState, optBody, optBodyOther, pressurePart, pressurePartOther, 
+    prePrecaution, skinIntegrity, gelAppliance, midPrecaution, ChgLocalPress, midPrecautionOther, 
+    specialCase, specialCaseOther, postSkinCase
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_braden_evaluate
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from doc_braden_evaluate
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.digihealth.anesthesia.doc.po.DocBradenEvaluate" >
+    insert into doc_braden_evaluate (id, regOptId, processState, 
+      optBody, optBodyOther, pressurePart, 
+      pressurePartOther, prePrecaution, skinIntegrity, 
+      gelAppliance, midPrecaution, ChgLocalPress, 
+      midPrecautionOther, specialCase, specialCaseOther, 
+      postSkinCase)
+    values (#{id,jdbcType=VARCHAR}, #{regOptId,jdbcType=VARCHAR}, #{processState,jdbcType=VARCHAR}, 
+      #{optBody,jdbcType=VARCHAR}, #{optBodyOther,jdbcType=VARCHAR}, #{pressurePart,jdbcType=VARCHAR}, 
+      #{pressurePartOther,jdbcType=VARCHAR}, #{prePrecaution,jdbcType=VARCHAR}, #{skinIntegrity,jdbcType=VARCHAR}, 
+      #{gelAppliance,jdbcType=VARCHAR}, #{midPrecaution,jdbcType=VARCHAR}, #{chgLocalPress,jdbcType=VARCHAR}, 
+      #{midPrecautionOther,jdbcType=VARCHAR}, #{specialCase,jdbcType=VARCHAR}, #{specialCaseOther,jdbcType=VARCHAR}, 
+      #{postSkinCase,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.digihealth.anesthesia.doc.po.DocBradenEvaluate" >
+    insert into doc_braden_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="regOptId != null" >
+        regOptId,
+      </if>
+      <if test="processState != null" >
+        processState,
+      </if>
+      <if test="optBody != null" >
+        optBody,
+      </if>
+      <if test="optBodyOther != null" >
+        optBodyOther,
+      </if>
+      <if test="pressurePart != null" >
+        pressurePart,
+      </if>
+      <if test="pressurePartOther != null" >
+        pressurePartOther,
+      </if>
+      <if test="prePrecaution != null" >
+        prePrecaution,
+      </if>
+      <if test="skinIntegrity != null" >
+        skinIntegrity,
+      </if>
+      <if test="gelAppliance != null" >
+        gelAppliance,
+      </if>
+      <if test="midPrecaution != null" >
+        midPrecaution,
+      </if>
+      <if test="chgLocalPress != null" >
+        ChgLocalPress,
+      </if>
+      <if test="midPrecautionOther != null" >
+        midPrecautionOther,
+      </if>
+      <if test="specialCase != null" >
+        specialCase,
+      </if>
+      <if test="specialCaseOther != null" >
+        specialCaseOther,
+      </if>
+      <if test="postSkinCase != null" >
+        postSkinCase,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="regOptId != null" >
+        #{regOptId,jdbcType=VARCHAR},
+      </if>
+      <if test="processState != null" >
+        #{processState,jdbcType=VARCHAR},
+      </if>
+      <if test="optBody != null" >
+        #{optBody,jdbcType=VARCHAR},
+      </if>
+      <if test="optBodyOther != null" >
+        #{optBodyOther,jdbcType=VARCHAR},
+      </if>
+      <if test="pressurePart != null" >
+        #{pressurePart,jdbcType=VARCHAR},
+      </if>
+      <if test="pressurePartOther != null" >
+        #{pressurePartOther,jdbcType=VARCHAR},
+      </if>
+      <if test="prePrecaution != null" >
+        #{prePrecaution,jdbcType=VARCHAR},
+      </if>
+      <if test="skinIntegrity != null" >
+        #{skinIntegrity,jdbcType=VARCHAR},
+      </if>
+      <if test="gelAppliance != null" >
+        #{gelAppliance,jdbcType=VARCHAR},
+      </if>
+      <if test="midPrecaution != null" >
+        #{midPrecaution,jdbcType=VARCHAR},
+      </if>
+      <if test="chgLocalPress != null" >
+        #{chgLocalPress,jdbcType=VARCHAR},
+      </if>
+      <if test="midPrecautionOther != null" >
+        #{midPrecautionOther,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCase != null" >
+        #{specialCase,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCaseOther != null" >
+        #{specialCaseOther,jdbcType=VARCHAR},
+      </if>
+      <if test="postSkinCase != null" >
+        #{postSkinCase,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.digihealth.anesthesia.doc.po.DocBradenEvaluate" >
+    update doc_braden_evaluate
+    <set >
+      <if test="regOptId != null" >
+        regOptId = #{regOptId,jdbcType=VARCHAR},
+      </if>
+      <if test="processState != null" >
+        processState = #{processState,jdbcType=VARCHAR},
+      </if>
+      <if test="optBody != null" >
+        optBody = #{optBody,jdbcType=VARCHAR},
+      </if>
+      <if test="optBodyOther != null" >
+        optBodyOther = #{optBodyOther,jdbcType=VARCHAR},
+      </if>
+      <if test="pressurePart != null" >
+        pressurePart = #{pressurePart,jdbcType=VARCHAR},
+      </if>
+      <if test="pressurePartOther != null" >
+        pressurePartOther = #{pressurePartOther,jdbcType=VARCHAR},
+      </if>
+      <if test="prePrecaution != null" >
+        prePrecaution = #{prePrecaution,jdbcType=VARCHAR},
+      </if>
+      <if test="skinIntegrity != null" >
+        skinIntegrity = #{skinIntegrity,jdbcType=VARCHAR},
+      </if>
+      <if test="gelAppliance != null" >
+        gelAppliance = #{gelAppliance,jdbcType=VARCHAR},
+      </if>
+      <if test="midPrecaution != null" >
+        midPrecaution = #{midPrecaution,jdbcType=VARCHAR},
+      </if>
+      <if test="chgLocalPress != null" >
+        ChgLocalPress = #{chgLocalPress,jdbcType=VARCHAR},
+      </if>
+      <if test="midPrecautionOther != null" >
+        midPrecautionOther = #{midPrecautionOther,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCase != null" >
+        specialCase = #{specialCase,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCaseOther != null" >
+        specialCaseOther = #{specialCaseOther,jdbcType=VARCHAR},
+      </if>
+      <if test="postSkinCase != null" >
+        postSkinCase = #{postSkinCase,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.digihealth.anesthesia.doc.po.DocBradenEvaluate" >
+    update doc_braden_evaluate
+    set regOptId = #{regOptId,jdbcType=VARCHAR},
+      processState = #{processState,jdbcType=VARCHAR},
+      optBody = #{optBody,jdbcType=VARCHAR},
+      optBodyOther = #{optBodyOther,jdbcType=VARCHAR},
+      pressurePart = #{pressurePart,jdbcType=VARCHAR},
+      pressurePartOther = #{pressurePartOther,jdbcType=VARCHAR},
+      prePrecaution = #{prePrecaution,jdbcType=VARCHAR},
+      skinIntegrity = #{skinIntegrity,jdbcType=VARCHAR},
+      gelAppliance = #{gelAppliance,jdbcType=VARCHAR},
+      midPrecaution = #{midPrecaution,jdbcType=VARCHAR},
+      ChgLocalPress = #{chgLocalPress,jdbcType=VARCHAR},
+      midPrecautionOther = #{midPrecautionOther,jdbcType=VARCHAR},
+      specialCase = #{specialCase,jdbcType=VARCHAR},
+      specialCaseOther = #{specialCaseOther,jdbcType=VARCHAR},
+      postSkinCase = #{postSkinCase,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByRegOptId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_braden_evaluate
+    where regOptId = #{regOptId,jdbcType=VARCHAR}
+  </select>
+
+</mapper>
